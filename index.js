@@ -2,6 +2,8 @@ const Joi = require('joi');
 const express = require('express');
 const app = express();
 
+require('dotenv').config() // read .ENV file
+
 app.use(express.json());
 
 const courses = [
@@ -71,20 +73,20 @@ app.put('/api/courses/:id',(req,res)=>{
 });
 
 app.delete('/api/courses/:id',(req,res)=>{
- // check course exists 
- // if not then 404 
- const course= courses.find(c => c.id=== parseInt(req.params.id));
- if(!course) {
-    res.status(404).send('The course with the given ID was not found') 
-    return;
- }
+    // check course exists 
+    // if not then 404 
+    const course= courses.find(c => c.id=== parseInt(req.params.id));
+    if(!course) {
+        res.status(404).send('The course with the given ID was not found') 
+        return;
+    }
 
 
- // delete 
-    const index = courses.indexOf(course);
-    courses.splice(index,1);
- // return the same course 
-    res.send(course);
+    // delete 
+        const index = courses.indexOf(course);
+        courses.splice(index,1);
+    // return the same course 
+        res.send(course);
 });
 
 function validateCourse(course){
